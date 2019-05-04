@@ -6,7 +6,6 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import botkit from 'botkit';
 import yelp from 'yelp-fusion';
-import emoji from 'node-emoji'; // emojissssss
 
 // worked on pseudoCODE with @charlottechui my babe
 
@@ -50,7 +49,7 @@ const controller = botkit.slackbot({
 const slackbot = controller.spawn({
   token: process.env.SLACK_BOT_TOKEN,
   // this grabs the slack token we exported earlier
-}).startRTM(err => {
+}).startRTM((err) => {
   // start the real time message client
   if (err) { throw new Error(err); }
 });
@@ -63,7 +62,7 @@ controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
   });
 });
 
-// random direct message 
+// random direct message
 controller.on('direct_mention', (bot, message) => {
   bot.reply(message, 'HI ur yelling. Mo00om I am an adult bot now');
 });
@@ -78,8 +77,8 @@ controller.on('outgoing_webhook', (bot, message) => {
   bot.reply(message, 'Mwah hello.');
 });
 
- // example hello response
- controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+// example hello response
+controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.api.users.info({ user: message.user }, (err, res) => {
     if (res) {
       bot.reply(message, `Howdy there, ${res.user.name}!`);
@@ -98,7 +97,7 @@ controller.hears(['wassup', 'how are you', 'what is up'], ['direct_message', 'di
       bot.reply(message, 'Tell me you are hungry!!');
     }
   });
-})
+});
 
 // help message
 controller.hears('help', ['direct_mention', 'direct_message'], (bot, message) => {
@@ -106,7 +105,7 @@ controller.hears('help', ['direct_mention', 'direct_message'], (bot, message) =>
 });
 
 // Yelp Integration
-const yelpClient = yelp.client(process.env.YELP_CLIENT_SECRET);
+const yelpClient = yelp.client(process.env.YELP_API_KEY);
 
 controller.hears(['food', 'hungry'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.api.users.info({ user: message.user }, (err, res) => {
@@ -115,12 +114,12 @@ controller.hears(['food', 'hungry'], ['direct_message', 'direct_mention', 'menti
         let location = '';
         let foodChoice = '';
 
-        convo.addQuestion(`Lol Im just a tweenage but I got u sis, ${res.user.name}. Where u at??? ex like Hanover, NH man`, (response, nextLine) => {
+        convo.addQuestion(`Lol Im just a tweenager but I got u sis ${res.user.name}. Where u at??? ex like Hanover, NH`, (response, nextLine) => {
           location = response.text;
           nextLine.next();
         }, { key: 'location' }, 'default');
 
-        convo.addQuestion(`Ok got u bro ${res.user.name}. Now what would you do for a Klondike bar?? JK tell me what food type you want I'm bored. ex sushi`, (response, nextLine) => {
+        convo.addQuestion(`Ok got u bro ${res.user.name}. Now what would you do for a Klondike bar?? JK tell me what food type you want I'm bored. ex Sushi`, (response, nextLine) => {
           foodChoice = response.text;
 
           if (location.length > 0 && foodChoice.length > 0) {
@@ -135,7 +134,7 @@ controller.hears(['food', 'hungry'], ['direct_message', 'direct_mention', 'menti
               const attachments = {
                 attachments: [
                   {
-                    fallback: 'Yikes what!',
+                    fallback: 'Yikes whaaaat!',
                     title: res.jsonBody.businesses[0].name,
                     text: res.jsonBody.businesses[0].url,
                     color: '#ff0000',
@@ -171,9 +170,6 @@ controller.hears('^[A-z]+$', ['direct_message', 'direct_mention', 'mention'], (b
 controller.on('outgoing_webhook', (bot, message) => {
   bot.replyPublic(message, 'Hiiiiiii u rang??');
 });
-
-
-
 
 
 // commenting out the server!
