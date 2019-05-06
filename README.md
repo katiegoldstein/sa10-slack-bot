@@ -17,3 +17,7 @@ Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting
 - for some reason Sushi is very difficult to get through to Yelp - search for Italian instead lol
 
 ## Screencaps
+![basic conversation](https://github.com/katiegoldstein/sa10-slack-bot/blob/master/Screen%20Shot%202019-05-05%20at%2011.45.50%20PM.png)
+
+![yelp api](https://github.com/katiegoldstein/sa10-slack-bot/blob/master/Screen%20Shot%202019-05-05%20at%2011.46.14%20PM.png)
+
